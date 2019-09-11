@@ -11,7 +11,6 @@ When(/^I log in with a default user$/, () => {
     loginPage.login(context.logins.user);
 });
 
-
 Then(/^show user name '(.+)' on the site$/, (userName) => {
     assert.equal(loginPage.userLoggedIn.getText(), userName);
 });

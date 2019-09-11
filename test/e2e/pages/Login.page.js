@@ -1,10 +1,7 @@
+const interval = 3000;
 class LoginPage {
     open() {
         browser.url('/');
-    }
-
-    get headerLogin() {
-        return $('.header-login');
     }
 
     get inputEmail() {
@@ -27,11 +24,9 @@ class LoginPage {
         if (this.buttonSignIn.isExisting()){
             this.inputEmail.setValue(user.login);
             this.inputPassword.setValue(user.password);
-            // eslint-disable-next-line no-magic-numbers
-            browser.pause(2000);
+            browser.pause(interval);
             this.buttonSignIn.click();
-            browser.pause(3000);
-            // eslint-disable-next-line no-empty
+            browser.pause(interval);
         }
     }
 }
