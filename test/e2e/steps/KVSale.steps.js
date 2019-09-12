@@ -4,7 +4,7 @@ import { kvSalePage } from '../pages/KVSale.page';
 
 When(/^I'm on the sale page$/, () => {
     const username = $('.lk-user-name').getText();
-    assert.equal()
+    assert.equal(username,"shiptest");
 });
 
 When(/^I choose a product$/, () => {
@@ -13,6 +13,14 @@ When(/^I choose a product$/, () => {
 
 When(/^I click finish checkout$/, () => {
     kvSalePage.finishSale();
+});
+
+When(/^I input a current customer$/, ()=> {
+    kvSalePage.deliverySettings();
+});
+
+When(/^I select a delivery service$/, ()=> {
+
 });
 
 Then(/^I see Successful Message$/, () => {

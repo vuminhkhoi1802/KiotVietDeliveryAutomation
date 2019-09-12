@@ -1,3 +1,5 @@
+import * as systemKeys from '../constants/SystemKeys.constant';
+
 class KVSalePage {
 
     get customerField() {
@@ -32,7 +34,7 @@ class KVSalePage {
         try {
             this.customerField.click();
             this.customerField.setValue(customer.name);
-            browser.keys('\uE007');
+            browser.keys(systemKeys.ENTER);
         } catch (error) {
             throw error;
         }
@@ -47,6 +49,12 @@ class KVSalePage {
         browser.pause(delayInterval);
         this.deliveryCheckBox.click();
         this.deliveryFinishButton.click();
+    }
+
+    selectDeliveryService() {
+        try {
+            this.deliveryServiceSelection.sendKeys("Viettel Post")
+        }
     }
 
     selectProduct () {

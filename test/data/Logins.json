@@ -6,5 +6,8 @@
   },
   "customer": {
     "name": "Lê Thùy Linh"
+  },
+  "delivery": {
+    "service": "Viettel Post"
   }
 }
