@@ -51,11 +51,11 @@ class KVSalePage {
         this.deliveryFinishButton.click();
     }
 
-    selectDeliveryService() {
-        try {
-            this.deliveryServiceSelection.sendKeys("Viettel Post")
-        }
-    }
+    // selectDeliveryService() {
+    //     try {
+    //         this.deliveryServiceSelection.sendKeys("Viettel Post")
+    //     }
+    // }
 
     selectProduct () {
         this.productSelection.click();

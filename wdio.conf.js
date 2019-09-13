@@ -20,7 +20,7 @@ exports.config = {
     outputDir: './test-report/output',
     bail: 0,
     baseUrl: 'https://testzone17.kiotviet.vn/sale/#/login',
-    waitforTimeout: 10000,
+    waitForTimeout: 10000,
     connectionRetryTimeout: 90000,
     connectionRetryCount: 3,
     framework: 'cucumber',

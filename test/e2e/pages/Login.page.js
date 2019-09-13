@@ -1,4 +1,5 @@
-const interval = 3000;
+const interval = 5000;
+
 class LoginPage {
     open() {
         browser.url('/');
@@ -24,9 +25,10 @@ class LoginPage {
         if (this.buttonSignIn.isExisting()){
             this.inputEmail.setValue(user.login);
             this.inputPassword.setValue(user.password);
-            browser.pause(interval);
             this.buttonSignIn.click();
-            browser.pause(interval);
+            browser.waitUntil(() => {
+                return this.userLoggedIn.getText() === 'shiptest';
+            }, interval)
         }
     }
 }
