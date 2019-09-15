@@ -1,18 +1,19 @@
-Feature: Perform a retail goods checkout
+Background: 		
+	Given User already login to the KV Sale Page	
 
-    Scenario: Perform an Order without Delivery
-        Given I'm on the login page
-        And I log in with a default user
-        And I'm on the sale page
-        When I choose a product
-        When I click finish checkout
-        Then I see Successful Message
+Scenario: User performed a successful checkout/sale			
+	Given I selected a product for sale		
+	When I filled in correct parameters in Shipping Detail using Ahamove		
+	Then I can see that I could use the Ahamove Service		
+	And I see a successful KV checkout message		
+			
+# Scenario: User performed unsucessful checkout/sale (User used non HCMC or Hanoi Receiving Address)			
+# 	Given I selected a product for sale		
+	# When I filled in correct parameters except the receiving address has <Area> as Area		
+# 	Then I can see that I could not use the Ahamove Service		
+# 	And I see a unsuccessful KV checkout message		
 
-    Scenario: Perform an Order with a Delivery Service
-        Given I'm on the login page
-        And I log in with a default user
-        And I'm on the sale page
-        When I input a current customer
-        When I select a delivery service
-        When I click finish checkout
-        Then I see Successful Message
+Examples:	
+	| Area    |
+	| Đà Nẵng |
+	| Hải Phòng |

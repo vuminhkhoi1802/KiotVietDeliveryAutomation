@@ -1,5 +1,11 @@
 import * as systemKeys from '../constants/SystemKeys.constant';
 
+export const delayInterval = 4000;
+
+const delayBrowser = () => {
+    browser.pause(delayInterval);
+}
+
 class KVSalePage {
 
     get customerField() {
@@ -14,16 +20,20 @@ class KVSalePage {
         return $('body #contact-link');
     }
 
+    get deliveryServiceInput () {
+        return $('div #searchPartnerForm');
+    }
+
     get deliveryServiceSelection() {
-        return $('');
+        return $(`//div[@class='kv-body']//div[2]//div[1]//label[1]//input[1]`);
     }
 
     get productSelection() {
-        return $('');
+        return $('*=Thuốc lá 555 nội');
     }
 
     get deliveryFinishButton() {
-        return $('');
+        return $(`//button[@class='btn btn-success'][contains(text(),'Xong')]`);
     }
 
     get checkOutButton() {
@@ -34,35 +44,49 @@ class KVSalePage {
         try {
             this.customerField.click();
             this.customerField.setValue(customer.name);
+            browser.keys(systemKeys.ARROW_DOWN);
             browser.keys(systemKeys.ENTER);
         } catch (error) {
             throw error;
         }
     }
 
-    deliverySettings() {
+    goToDeliverySettings() {
         if (!this.deliveryLink.isExisting()) {
             this.deliveryCheckBox.click();
         }
         this.deliveryLink.click();
-        const delayInterval = 4000;
-        browser.pause(delayInterval);
-        this.deliveryCheckBox.click();
-        this.deliveryFinishButton.click();
+        delayBrowser();
+        // this.deliveryCheckBox.click();
+        // this.deliveryFinishButton.click();
     }
 
-    // selectDeliveryService() {
-    //     try {
-    //         this.deliveryServiceSelection.sendKeys("Viettel Post")
-    //     }
-    // }
+    selectDeliveryService() {
+        try {
+            this.deliveryServiceSelection.sendKeys("Viettel Post");
+            browser.keys(systemKeys.ARROW_DOWN);
+            browser.keys(systemKeys.ENTER);
+            this.deliveryServiceSelection.click();
+            delayBrowser();
+        } catch (error) {
+            throw error;
+        }
+    }
 
-    selectProduct () {
+
+
+    selectProduct() {
         this.productSelection.click();
+    }
+
+    finishDelivery() {
+        this.deliveryFinishButton.click();
     }
 
     finishSale() {
         this.checkOutButton.click();
+        browser.keys(systemKeys.ESCAPE);
+        delayBrowser();
     }
 
 
