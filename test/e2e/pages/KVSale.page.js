@@ -1,39 +1,52 @@
 import * as systemKeys from '../constants/SystemKeys.constant';
 
-export const delayInterval = 4000;
+export const delayInterval = 7000;
 
 const delayBrowser = () => {
     browser.pause(delayInterval);
-}
+};
+
+const runInBrowser = (argument) => {
+    argument.click();
+};
 
 class KVSalePage {
+
+    get popUpWindow() {
+        return $('.popup-header');
+    }
 
     get customerField() {
         return $('body #customerSearchInput');
     }
 
     get deliveryCheckBox() {
-        return $('input #delivery');
+        return $('body #delivery');
     }
 
     get deliveryLink() {
-        return $('body #contact-link');
+        return  browser.$('//span[contains(text(),\'Giao hàng\')]');
     }
 
     get deliveryServiceInput () {
-        return $('div #searchPartnerForm');
+        return browser.$('//div[@class=\'swiper-slide swiper-slide-active\']//li[1]');
+    }
+
+    get deliveryWindowsTitle() {
+        return browser.$('//span[@class=\'k-window-title\']');
     }
 
     get deliveryServiceSelection() {
-        return $(`//div[@class='kv-body']//div[2]//div[1]//label[1]//input[1]`);
+        return browser.$('//div[@class=\'kv-body\']//div[2]//div[1]//label[1]//input[1]');
     }
 
     get productSelection() {
-        return $('*=Thuốc lá 555 nội');
+        return browser.$('//span[contains(text(),\'c lá 555 n\')]');
     }
 
+
     get deliveryFinishButton() {
-        return $(`//button[@class='btn btn-success'][contains(text(),'Xong')]`);
+        return browser.$('//button[@class=\'btn btn-success\'][contains(text(),\'Xong\')]');
     }
 
     get checkOutButton() {
@@ -42,68 +55,64 @@ class KVSalePage {
 
     inputCustomer(customer) {
         try {
-            this.customerField.click();
+            browser.execute(runInBrowser, this.customerField);
             this.customerField.setValue(customer.name);
-            browser.keys(systemKeys.ARROW_DOWN);
+            delayBrowser();
             browser.keys(systemKeys.ENTER);
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    goToDeliverySettings() {
-        if (!this.deliveryLink.isExisting()) {
-            this.deliveryCheckBox.click();
-        }
-        this.deliveryLink.click();
-        delayBrowser();
-        // this.deliveryCheckBox.click();
-        // this.deliveryFinishButton.click();
-    }
-
-    selectDeliveryService() {
-        try {
-            this.deliveryServiceSelection.sendKeys("Viettel Post");
-            browser.keys(systemKeys.ARROW_DOWN);
-            browser.keys(systemKeys.ENTER);
-            this.deliveryServiceSelection.click();
             delayBrowser();
         } catch (error) {
             throw error;
         }
     }
 
-
+    handlePopUp() {
+        if (this.popUpWindow.isExisting()) {
+            this.popUpWindow.click();
+            browser.keys(systemKeys.ESCAPE);
+        }
+    }
 
     selectProduct() {
-        this.productSelection.click();
-    }
-
-    finishDelivery() {
-        this.deliveryFinishButton.click();
-    }
-
-    finishSale() {
-        this.checkOutButton.click();
+        delayBrowser();
+        this.handlePopUp();
         browser.keys(systemKeys.ESCAPE);
+        browser.execute(runInBrowser, this.productSelection);
+    }
+
+    goToDeliverySettings() {
+        browser.execute(runInBrowser, this.deliveryCheckBox);
+        browser.execute(runInBrowser,this.deliveryLink);
         delayBrowser();
     }
 
+    selectDeliveryService() {
+        try {
+            delayBrowser();
+            // browser.execute(runInBrowser, this.deliveryServiceInput);
+            // this.deliveryServiceInput.setValue(delivery.service);
+            // browser.keys(systemKeys.ARROW_DOWN);
+            // delayBrowser();
+            // browser.keys(systemKeys.ENTER);
+            // delayBrowser();
+            browser.execute(runInBrowser, this.deliveryServiceSelection);
+            delayBrowser();
+        } catch (error) {
+            throw error;
+        }
+    }
 
-    // sendMessage(content) {
-    //     if (content.file != null) {
-    //         const localFilePath = `${path.resolve('./')}/documents/${
-    //             content.file
-    //         }`;
-    //         const remoteFilePath = browser.uploadFile(localFilePath);
-    //         this.inputFile.setValue(remoteFilePath);
-    //     }
-    //
-    //     this.subjectContact.selectByAttribute('value', content.subject);
-    //     this.message.setValue(content.message);
-    //
-    //     this.buttonSubmitMessage.click();
-    // }
+    finishDelivery() {
+        browser.execute(runInBrowser, this.deliveryFinishButton);
+    }
+
+    finishSale() {
+        // this.checkOutButton.click();
+        browser.execute(runInBrowser, this.checkOutButton);
+        delayBrowser();
+        browser.keys(systemKeys.ESCAPE);
+        delayBrowser();
+
+    }
 }
 
 export const kvSalePage = new KVSalePage();

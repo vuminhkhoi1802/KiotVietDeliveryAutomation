@@ -28,9 +28,11 @@ class LoginPage {
             this.buttonSignIn.click();
             browser.waitUntil(() => {
                 return this.userLoggedIn.getText() === 'shiptest';
-            }, interval)
+            }, interval);
         }
     }
+
+
 }
 
 export const loginPage = new LoginPage();

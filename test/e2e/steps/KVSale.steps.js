@@ -1,46 +1,58 @@
 import { assert } from 'chai';
-import { Given, When, Then, And } from 'cucumber';
+import { Given, When, Then } from 'cucumber';
 import { kvSalePage } from '../pages/KVSale.page';
 import { loginPage } from '../pages/Login.page';
 import * as systemMessages from '../constants/SystemMessages.constant';
-import * as systemLabels from '../constants/SystemKeys.constant';
+import * as systemLabels from '../constants/SystemLabels.constant';
+import { context } from '../../data/Context';
 
 Given(/^User already login to the KV Sale Page$/, () => {
-    loginPage.login();
+    loginPage.open();
+    loginPage.login(context.logins.user);
 });
 
-Given (/^I selected a product for sale$/,() => {
+Given(/^Da chon san pham vao gio hang$/, () => {
     kvSalePage.selectProduct();
-    assert.equal(kvSalePage.productSelection.getText(), 'Thuốc lá 555 nội');
+    // assert.equal(kvSalePage.productSelection.getText(), 'Thuốc lá 555 nội');
 });
 
-When(/^I filled in correct parameters in Shipping Detail using Ahamove$/, () => {
-    kvSalePage.inputCustomer();
+When(/^Dien thong tin giao hang$/, () => {
+    kvSalePage.inputCustomer(context.logins.customer);
     kvSalePage.goToDeliverySettings();
-    kvSalePage.selectDeliveryService();
+    const title = browser.$('//span[@class=\'k-window-title\']');
+    assert.equal(title.getText(), 'Chi tiết đơn giao hàng');
+
 });
 
-Then(/^I can see that I could use the Ahamove Service$/, () => {
-    const service = $(`//div[contains(text(),'VTK - Ti')]`);
-    assert.equal(service, systemLabels.SERVICE_DELIVERY);
+When(/^Dien thong tin doi tac giao hang$/, () => {
+    // const service = browser.$(`//div[contains(text(),'VTK')]`);
+    kvSalePage.selectDeliveryService(context.logins.delivery);
+    // assert.equal(service, systemLabels.SERVICE_DELIVERY);
 });
 
-And(/^I see a successful KV checkout message$/, () => {
+When(/^Thanh toan don hang$/, () => {
     kvSalePage.finishDelivery();
     kvSalePage.finishSale();
+});
+
+Then(/^I see a successful KV checkout message$/, () => {
     const successMessage = $('div #toast-container').getText();
-    assert.equal(successMessage, systemMessages.ORDER_SUCCESS);
-})
-
-When(/^I choose a product$/, () => {
-    kvSalePage.selectProduct();
+    if (assert.equal(successMessage, systemMessages.ORDER_SUCCESS)) {
+        console.log(successMessage);
+    } else {
+        console.error('');
+    }
 });
 
-When(/^I click finish checkout$/, () => {
-
-    kvSalePage.finishSale();
-});
-
-When(/^I input a current customer$/, () => {
-    kvSalePage.deliverySettings();
-});
+// When(/^I choose a product$/, () => {
+//     kvSalePage.selectProduct();
+// });
+//
+// When(/^I click finish checkout$/, () => {
+//
+//     kvSalePage.finishSale();
+// });
+//
+// When(/^I input a current customer$/, () => {
+//     kvSalePage.deliverySettings();
+// });

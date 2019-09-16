@@ -5,9 +5,9 @@
     "password": "shiptest12$3"
   },
   "customer": {
-    "name": "Lê Thùy Linh"
+    "name": "Khôi"
   },
   "delivery": {
-    "service": "Viettel Post"
+    "service": "Viettel"
   }
 }
