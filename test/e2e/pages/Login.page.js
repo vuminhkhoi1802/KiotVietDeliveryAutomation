@@ -1,38 +1,65 @@
-const interval = 5000;
+import {
+  kvLivePrefix, kvPreLivePrefix, kvStagingPrefix, kvStagingURL, kvURL
+} from '../constants/SystemURLs.constant';
+
 
 class LoginPage {
-    open() {
-        browser.url('/');
-    }
+  open () {
+    browser.url (kvURL);
+  }
 
-    get inputEmail() {
-        return $('body #UserName');
-    }
+  get kvLogoSlogan () {
+    return browser.$ ('//a[@class=\'logo dpib ovh\']//img');
+  }
 
-    get inputPassword() {
-        return $('body #Password');
-    }
+  get inputEmail () {
+    return $ ('body #UserName');
+  }
 
-    get buttonSignIn() {
-        return $('body #loginNewSale');
-    }
+  get inputPassword () {
+    return $ ('body #Password');
+  }
 
-    get userLoggedIn() {
-        return $('.lk-user-name');
-    }
+  get buttonSaleSignIn () {
+    return $ ('body #loginNewSale');
+  }
 
-    login(user) {
-        if (this.buttonSignIn.isExisting()){
-            this.inputEmail.setValue(user.login);
-            this.inputPassword.setValue(user.password);
-            this.buttonSignIn.click();
-            browser.waitUntil(() => {
-                return this.userLoggedIn.getText() === 'shiptest';
-            }, interval);
-        }
-    }
+  get buttonManagementSignIn () {
+    return browser.$ ('//input[@name=\'quan-ly\']');
+  }
 
+  get userSaleLoggedIn () {
+    return $ ('.lk-user-name');
+  }
+
+  get userManagementLoggedIn () {
+    return browser.$ ('//a[@class=\'dpib userName\']');
+  }
+
+  fillInCredential (user) {
+    const currentURL = browser.getUrl ();
+    if (this.kvLogoSlogan.isExisting ()) {
+      if (currentURL.includes (kvPreLivePrefix)) {
+        this.inputEmail.setValue (user.preLive.login);
+        this.inputPassword.setValue (user.preLive.password);
+      } else if (currentURL.includes (kvLivePrefix)) {
+        this.inputEmail.setValue (user.production.login);
+        this.inputPassword.setValue (user.production.password);
+      } else if (currentURL.includes (kvStagingPrefix)) {
+        this.inputEmail.setValue (user.staging.login);
+        this.inputPassword.setValue (user.staging.password);
+      }
+    }
+  }
+
+  loginSale () {
+    this.buttonSaleSignIn.click ();
+  }
+
+  loginManagement () {
+    this.buttonManagementSignIn.click ();
+  }
 
 }
 
-export const loginPage = new LoginPage();
+export const loginPage = new LoginPage ();

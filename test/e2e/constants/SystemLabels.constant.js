@@ -1,2 +1,1 @@
-export const CUSTOMER_SERVICE = 'CUSTOMER SERVICE - CONTACT US';
-export const SERVICE_DELIVERY = 'VTK - Tiết kiệm';
+export const SHIPPING_ORDER_DELIVERY_LIST = 'Danh sách Vận Đơn';

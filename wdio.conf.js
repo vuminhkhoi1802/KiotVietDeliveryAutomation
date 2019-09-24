@@ -1,4 +1,4 @@
-const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
+const {TimelineService} = require('wdio-timeline-reporter/timeline-service');
 
 exports.config = {
     runner: 'local',
@@ -19,7 +19,7 @@ exports.config = {
     logLevel: 'trace',
     outputDir: './test-report/output',
     bail: 0,
-    baseUrl: 'https://testzone17.kiotviet.vn/sale/#/login',
+    baseUrl: 'https://testgiaovan.kvpos.com:9009/login',
     waitForTimeout: 10000,
     connectionRetryTimeout: 90000,
     connectionRetryCount: 3,
@@ -35,7 +35,7 @@ exports.config = {
                 disableWebdriverScreenshotsReporting: false,
             },
         ],
-        ['timeline', { outputDir: './test-report/timeline' }],
+        ['timeline', {outputDir: './test-report/timeline'}],
     ],
     cucumberOpts: {
         requireModule: ['@babel/register'],

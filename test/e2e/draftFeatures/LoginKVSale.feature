@@ -1,4 +1,4 @@
-Feature: Performing a login
+Feature: Performing a login to KV Sale
 
     Background:
         Given I'm on the login page
@@ -6,3 +6,4 @@ Feature: Performing a login
     Scenario: Login with a default user
         When I log in with a default user
         Then show user name 'shiptest' on the site
+

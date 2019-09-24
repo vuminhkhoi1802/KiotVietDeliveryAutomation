@@ -12,3 +12,9 @@ node_modules/
 
 ### Zalenium ###
 videos/
+
+### Chromium Strace ###
+chromium.strace
+
+### ESLint ###
+.eslintrc.js
